@@ -5,6 +5,7 @@ using Devagram.Repository.Impl;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,10 @@ var connectionstring = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<DevagramContext>(option => option.UseSqlServer(connectionstring));
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepositoryImpl>();
+builder.Services.AddScoped<ISeguidorRepository, SeguidorRepositoryImpl>();
+builder.Services.AddScoped<IPublicacaoRepository, PublicacaoRepositoryImpl>();
+builder.Services.AddScoped<IComentarioRepository, ComentarioRepositoryImpl>();
+builder.Services.AddScoped<ICurtidasRepository, CurtidaRepositoryImpl>();
 
 var ChaveCriptografia = Encoding.ASCII.GetBytes(ChaveJWT.ChaveSecreta);
 builder.Services.AddAuthentication(auth =>
