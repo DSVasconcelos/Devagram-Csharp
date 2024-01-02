@@ -9,5 +9,6 @@ namespace Devagram.Repository
         public void Descurtir(Curtida curtida);
 
         public Curtida GetCurtida(int IdPublicacao, int IdUsuario);
+        List<Curtida> GetCurtidaPorPublicacao(int idPublicacao);
     }
 }

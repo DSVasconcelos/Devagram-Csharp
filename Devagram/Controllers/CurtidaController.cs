@@ -12,13 +12,17 @@ namespace Devagram.Controllers
     {
         private readonly ILogger<CurtidaController> _logger;
         private readonly ICurtidasRepository _curtidaRepository;
+        private readonly INotificacaoRepository _notificacaoRepository;
 
         public CurtidaController(ILogger<CurtidaController> logger,
                                   ICurtidasRepository curtidaRepository,
-                                  IUsuarioRepository usuarioRepository) : base(usuarioRepository)
+                                  IUsuarioRepository usuarioRepository,
+                                  INotificacaoRepository notificacaoRepository) : base(usuarioRepository)
         {
             _logger = logger;
             _curtidaRepository = curtidaRepository;
+            _notificacaoRepository = notificacaoRepository;
+
         }
         [HttpPut]
         public IActionResult Curtir([FromBody] CurtidaRequisicaoDto curtidadto) { 
@@ -42,6 +46,14 @@ namespace Devagram.Controllers
                         };
 
                         _curtidaRepository.Curtir(curtidaNova);
+
+                        Interacao interacao = new Interacao(); //gera um nova notificação
+                        interacao.tipo = "curtida";
+                        interacao.visualizado = false;
+                        interacao.IdUsuario = LerToken().Id;
+                        interacao.IdPublicacao = curtidadto.IdPublicacao;
+
+                        _notificacaoRepository.Notificar(interacao); //envia a notificação para ser salva no banco de dados
 
                         return Ok("Publicacao curtida com sucesso");
                     }

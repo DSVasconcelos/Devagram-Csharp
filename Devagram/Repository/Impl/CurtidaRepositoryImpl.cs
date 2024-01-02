@@ -29,5 +29,10 @@ namespace Devagram.Repository.Impl
                                                     c.IdPublicacao == IdPublicacao && 
                                                     c.IdUsuario == IdUsuario);
         }
+
+        public List<Curtida> GetCurtidaPorPublicacao(int idPublicacao)
+        {
+            return _context.Curtidas.Where(c => c.IdPublicacao == idPublicacao).ToList();
+        }
     }
 }

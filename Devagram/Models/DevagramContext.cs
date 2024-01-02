@@ -18,7 +18,7 @@ namespace Devagram.Models
 
         public DbSet<Curtida>Curtidas { get; set; }
 
-       
+        public DbSet<Interacao> Interacoes { get; set; }
 
     }
 }
